@@ -183,6 +183,15 @@ function githubInputs() {
     .map((i) => i.trim())
     .filter((i) => i !== "");
 
+  const artifactsOverrideType =
+    core.getInput("artifacts-override-type", { required: false }) || undefined;
+  let artifactsOverride = undefined;
+  if (artifactsOverrideType) {
+    artifactsOverride = {
+      type: artifactsOverrideType,
+    }
+  }
+
   return {
     projectName,
     owner,
@@ -193,6 +202,7 @@ function githubInputs() {
     environmentTypeOverride,
     imageOverride,
     envPassthrough,
+    artifactsOverride,
   };
 }
 
@@ -207,6 +217,7 @@ function inputs2Parameters(inputs) {
     environmentTypeOverride,
     imageOverride,
     envPassthrough = [],
+    artifactsOverride,
   } = inputs;
 
   const sourceTypeOverride = "GITHUB";
@@ -230,6 +241,7 @@ function inputs2Parameters(inputs) {
     environmentTypeOverride,
     imageOverride,
     environmentVariablesOverride,
+    artifactsOverride,
   };
 }
 
